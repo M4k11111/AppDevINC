@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>DTR System</title>
+  <style>
+    body { font-family: Arial; padding: 2rem; background: #f3f4f6; }
+    h2 { text-align: center; }
+    form, table { margin: 1rem auto; max-width: 600px; }
+    input, button { padding: 0.5rem; margin: 0.5rem 0; width: 100%; }
+    table { width: 100%; border-collapse: collapse; background: #fff; }
+    th, td { padding: 0.5rem; border: 1px solid #ccc; text-align: center; }
+    .actions button { margin: 0.25rem; }
+  </style>
+</head>
+<body>
+
+<h2>DTR - Time In / Time Out</h2>
+
+<form id="timeForm">
+  <input type="text" id="employeeId" placeholder="Enter Employee ID" required />
+  <button type="submit">Time In</button>
+</form>
+
+<table>
+  <thead>
+    <tr>
+      <th>Employee ID</th>
+      <th>Time In</th>
+      <th>Time Out</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody id="dtrTable"></tbody>
+</table>
+
+<script src="dtr.js"></script>
+</body>
+</html>
