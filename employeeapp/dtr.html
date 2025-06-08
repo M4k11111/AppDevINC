@@ -1,39 +1,183 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>DTR System</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
-    body { font-family: Arial; padding: 2rem; background: #f3f4f6; }
-    h2 { text-align: center; }
-    form, table { margin: 1rem auto; max-width: 600px; }
-    input, button { padding: 0.5rem; margin: 0.5rem 0; width: 100%; }
-    table { width: 100%; border-collapse: collapse; background: #fff; }
-    th, td { padding: 0.5rem; border: 1px solid #ccc; text-align: center; }
-    .actions button { margin: 0.25rem; }
+    * {
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background: #f9fafb;
+      margin: 0;
+      padding: 2rem;
+      color: #111827;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 0.5rem;
+      color: #1f2937;
+    }
+
+    #datetime {
+      text-align: center;
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
+      color: #4b5563;
+      font-weight: 500;
+    }
+
+    form {
+      max-width: 400px;
+      margin: 0 auto 2rem;
+      display: flex;
+      gap: 0.5rem;
+      flex-direction: column;
+    }
+
+    input {
+      padding: 0.75rem;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 1rem;
+      background: white;
+    }
+
+    button {
+      padding: 0.75rem;
+      background-color: #3b82f6;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #2563eb;
+    }
+
+    table {
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto;
+      border-collapse: collapse;
+      background: white;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 1rem;
+      border-bottom: 1px solid #e5e7eb;
+      text-align: center;
+      font-size: 0.95rem;
+    }
+
+    th {
+      background-color: #f3f4f6;
+      font-weight: 600;
+      color: #374151;
+    }
+
+    tr:hover {
+      background-color: #f9fafb;
+    }
+
+    .actions button {
+      background-color: #10b981;
+      padding: 0.4rem 0.8rem;
+      font-size: 0.9rem;
+      border-radius: 6px;
+      border: none;
+      color: white;
+      cursor: pointer;
+      margin: 0 0.25rem;
+    }
+
+    .actions button:hover {
+      background-color: #059669;
+    }
+
+    @media (max-width: 640px) {
+      table, thead, tbody, th, td, tr {
+        display: block;
+      }
+
+      th {
+        display: none;
+      }
+
+      td {
+        position: relative;
+        padding-left: 50%;
+        text-align: left;
+      }
+
+      td::before {
+        position: absolute;
+        top: 1rem;
+        left: 1rem;
+        font-weight: bold;
+        content: attr(data-label);
+        color: #6b7280;
+      }
+    }
   </style>
 </head>
 <body>
 
-<h2>DTR - Time In / Time Out</h2>
+  <h2>DTR - Time In / Time Out</h2>
+  <div id="datetime"></div>
 
-<form id="timeForm">
-  <input type="text" id="employeeId" placeholder="Enter Employee ID" required />
-  <button type="submit">Time In</button>
-</form>
+  <form id="timeForm">
+    <input type="text" id="employeeId" placeholder="Enter Employee ID" required />
+    <button type="submit">Time In</button>
+  </form>
 
-<table>
-  <thead>
-    <tr>
-      <th>Employee ID</th>
-      <th>Time In</th>
-      <th>Time Out</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody id="dtrTable"></tbody>
-</table>
+  <table>
+    <thead>
+      <tr>
+        <th>Employee ID</th>
+        <th>Time In</th>
+        <th>Time Out</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="dtrTable">
+      <!-- Populated by JS -->
+    </tbody>
+  </table>
 
-<script src="dtr.js"></script>
+  <script src="dtr.js"></script>
+  <script>
+    function updateDateTime() {
+      const now = new Date();
+      const options = {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true
+      };
+      const datetimeEl = document.getElementById('datetime');
+      if (datetimeEl) {
+        datetimeEl.textContent = now.toLocaleString('en-US', options);
+      }
+    }
+
+    updateDateTime();
+    setInterval(updateDateTime, 1000);
+  </script>
+
 </body>
 </html>

@@ -5,48 +5,75 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Register</title>
   <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
     body {
-      background: #f3f4f6;
+      background: linear-gradient(145deg, #e0e7ff, #f3f4f6);
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
-      font-family: Arial, sans-serif;
+      margin: 0;
     }
     .register-container {
       background: #fff;
-      padding: 2rem;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      padding: 2.5rem;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
       max-width: 360px;
       width: 100%;
+      transition: box-shadow 0.3s ease;
+    }
+    .register-container:hover {
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
     }
     h2 {
       text-align: center;
-      margin-bottom: 1.5rem;
+      margin-bottom: 2rem;
+      font-weight: 600;
+      color: #1f2937;
     }
     input {
       width: 100%;
-      padding: 0.75rem;
-      margin-bottom: 1rem;
-      border: 1px solid #ccc;
-      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      margin-bottom: 1.2rem;
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      background: #f9fafb;
+      font-size: 1rem;
+      transition: border 0.2s;
+    }
+    input:focus {
+      border-color: #3b82f6;
+      background: #fff;
+      outline: none;
     }
     button {
       width: 100%;
-      padding: 0.75rem;
-      background-color: #2563eb;
-      color: #fff;
+      padding: 0.75rem 1rem;
+      background-color: #3b82f6;
+      color: white;
       border: none;
-      border-radius: 8px;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 500;
       cursor: pointer;
+      transition: background 0.3s ease;
     }
     button:hover {
-      background-color: #1d4ed8;
+      background-color: #2563eb;
     }
     .message {
       text-align: center;
       margin-top: 1rem;
+      font-size: 0.95rem;
+      color: #dc2626;
+      min-height: 1.2rem;
+    }
+    .message.success {
+      color: #16a34a;
     }
   </style>
 </head>
@@ -69,24 +96,29 @@
       const form = event.target;
       const username = form.username.value.trim();
       const password = form.password.value;
-
-      const res = await fetch(`${base_url}/registeraccount/`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password })
-      });
-
-      const result = await res.json();
       const messageEl = document.getElementById("message");
 
-      if (result.success) {
-        window.location.href = "login.html";
-        messageEl.textContent = "Registration successful!";
-        messageEl.style.color = "green";
-        form.reset();
-      } else {
-        messageEl.textContent = result.message || "Registration failed.";
-        messageEl.style.color = "red";
+      try {
+        const res = await fetch(`${base_url}/registeraccount/`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username, password })
+        });
+
+        const result = await res.json();
+
+        if (result.success) {
+          messageEl.textContent = "Registration successful! Redirecting...";
+          messageEl.className = "message success";
+          setTimeout(() => window.location.href = "login.html", 1500);
+        } else {
+          messageEl.textContent = result.message || "Registration failed.";
+          messageEl.className = "message";
+        }
+      } catch (error) {
+        messageEl.textContent = "An error occurred. Please try again.";
+        messageEl.className = "message";
+        console.error(error);
       }
     }
   </script>

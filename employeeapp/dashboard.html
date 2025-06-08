@@ -5,26 +5,89 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Employee CRUD App</title>
   <style>
-    body {
-      font-family: sans-serif;
-      margin: 2rem;
+    * {
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
     }
+    body {
+      background: #f9fafb;
+      padding: 2rem;
+      margin: 0;
+      color: #111827;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 2rem;
+      color: #1f2937;
+    }
+
+    form {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      justify-content: center;
+    }
+    input {
+      padding: 0.6rem;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      font-size: 1rem;
+      background: #fff;
+      width: calc(33% - 1rem);
+      min-width: 180px;
+    }
+    button {
+      padding: 0.6rem 1.2rem;
+      background-color: #3b82f6;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    button:hover {
+      background-color: #2563eb;
+    }
+
+    #editForm button[type="button"] {
+      background: #9ca3af;
+    }
+    #editForm button[type="button"]:hover {
+      background: #6b7280;
+    }
+
+    #dtrButton {
+      display: block;
+      margin: 1rem auto;
+      background: #10b981;
+    }
+    #dtrButton:hover {
+      background: #059669;
+    }
+
     table {
       width: 100%;
       border-collapse: collapse;
       margin-top: 1rem;
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
     }
     th, td {
-      border: 1px solid #ccc;
-      padding: 0.5rem;
+      padding: 0.75rem 1rem;
       text-align: left;
+      border-bottom: 1px solid #e5e7eb;
     }
-    form {
-      margin-bottom: 1rem;
+    th {
+      background-color: #f3f4f6;
+      font-weight: 600;
+      color: #374151;
     }
-    input, button {
-      margin-right: 0.5rem;
-      padding: 0.4rem;
+    tr:hover {
+      background-color: #f9fafb;
     }
   </style>
   <script src="script.js" defer></script>
@@ -36,19 +99,18 @@
     <input type="text" id="employeeId" placeholder="Employee ID" required />
     <input type="text" id="firstName" placeholder="First Name" required />
     <input type="text" id="lastName" placeholder="Last Name" required />
-    <button type="submit">Add Employee</button>
+    <button type="submit">Add</button>
   </form>
 
   <form id="editForm" style="display:none">
     <input type="text" id="editEmployeeId" placeholder="Employee ID" required />
     <input type="text" id="editFirstName" placeholder="First Name" required />
     <input type="text" id="editLastName" placeholder="Last Name" required />
-    <button type="submit">Update Employee</button>
+    <button type="submit">Update</button>
     <button type="button" onclick="cancelEdit()">Cancel</button>
   </form>
 
-  <!-- Added DTR page button -->
-  <button id="dtrButton" style="margin-bottom: 1rem;">Go to DTR Page</button>
+  <button id="dtrButton">Go to DTR Page</button>
 
   <table>
     <thead>
@@ -62,7 +124,7 @@
   </table>
 
   <script>
-    // Redirect to DTR page when button is clicked
+    // Redirect to DTR page
     document.getElementById('dtrButton').addEventListener('click', () => {
       window.location.href = 'dtr.html';
     });
